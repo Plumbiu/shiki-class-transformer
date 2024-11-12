@@ -30,8 +30,9 @@ import 'shiki-class-transformer/themes/vitesse-light.css'
 ```
 
 > [!NOTE]
-> If your have different themes, like `'dark'` of `'light'`, please manual copy [files](/src/themes/) to your project
+> If your have different themes, like `'dark'` of `'light'`, please copy [file](/src/themes/) to your project manually.
 
 # Future
 
 - [ ] test
+- [ ] custom prefix
