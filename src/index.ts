@@ -2,10 +2,6 @@ import { type ShikiTransformer } from '@shikijs/types'
 import { ShikiMap } from './types'
 
 interface ShikiClassTransformerParams {
-
-  /**
-   * Better use the light theme
-   */
   map: ShikiMap
 
   /**
@@ -13,12 +9,6 @@ interface ShikiClassTransformerParams {
    * @default 'color'
    */
   key?: string
-
-  /**
-   * set `true` will log the `htmlStyle`
-   * @default false
-   */
-  dev?: boolean
 }
 
 function isString(x: unknown): x is string {
@@ -28,7 +18,6 @@ function isString(x: unknown): x is string {
 export function shikiClassTransformer({
   map,
   key = 'color',
-  dev = false,
 }: ShikiClassTransformerParams): ShikiTransformer {
   return {
     tokens(tokens) {
@@ -42,19 +31,16 @@ export function shikiClassTransformer({
           if (!foreground) {
             return
           }
-          if (!token.htmlAttrs) {
-            token.htmlAttrs = {}
-          }
-          token.htmlStyle = {}
-          let originClassName = token.htmlAttrs.class ?? ''
-          if (dev) {
-            console.log(htmlStyle)
-          }
           const className = map[foreground]
           if (className) {
+            if (!token.htmlAttrs) {
+              token.htmlAttrs = {}
+            }
+            let originClassName = token.htmlAttrs.class ?? ''
             originClassName += ` ${className}`
+            token.htmlStyle = {}
+            token.htmlAttrs.class = originClassName.trim()
           }
-          token.htmlAttrs.class = originClassName.trim()
         }
       }
     },
