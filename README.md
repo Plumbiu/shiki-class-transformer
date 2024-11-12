@@ -40,14 +40,14 @@ If you use shikis's [`Theme Colors Manipulation`](https://shiki.style/guide/them
 <span style="--shiki-light:#B56959;--shiki-dark:#C98A7D;" />
 ```
 
-config the selector:
+config the `key`:
 
 ```js
 import { shikiClassTransformer } from 'shiki-class-transformer'
 import shikiMap from 'shiki-class-transformer/themes/vitesse-light.json'
 shikiClassTransformer({
   map: shikiMap,
-  selector: '--shiki-light', // vitesse-dark.json is `--shiki-dark`
+  key: '--shiki-light', // vitesse-dark.json is `--shiki-dark`
 }),
 
 ```
