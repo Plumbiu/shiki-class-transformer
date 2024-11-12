@@ -45,7 +45,6 @@ export function shikiClassTransformer({
           if (!token.htmlAttrs) {
             token.htmlAttrs = {}
           }
-          token.htmlStyle = {}
           let originClassName = token.htmlAttrs.class ?? ''
           if (dev) {
             console.log(htmlStyle)
