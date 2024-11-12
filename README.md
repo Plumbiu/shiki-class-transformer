@@ -32,6 +32,26 @@ import 'shiki-class-transformer/themes/vitesse-light.css'
 > [!NOTE]
 > If your have different themes, like `'dark'` of `'light'`, please copy [file](/src/themes/) to your project manually.
 
+# Theme Colors Manipulation
+
+If you use shikis's [`Theme Colors Manipulation`](https://shiki.style/guide/theme-colors), the style in html may be:
+
+```html
+<span style="--shiki-light:#B56959;--shiki-dark:#C98A7D;" />
+```
+
+config the selector:
+
+```js
+import { shikiClassTransformer } from 'shiki-class-transformer'
+import shikiMap from 'shiki-class-transformer/themes/vitesse-light.json'
+shikiClassTransformer({
+  map: shikiMap,
+  selector: '--shiki-light', // vitesse-dark.json is `--shiki-dark`
+}),
+
+```
+
 # Future
 
 - [ ] test
