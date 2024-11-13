@@ -52,10 +52,12 @@ async function run(p: string, lang: string) {
           const className = spanWithTransformer.className
           // @ts-ignore
           const classNameWithTransformer = map['#' + hex]
-          if (!className) {
-            // className is Falsy
-            expect(classNameWithTransformer).toBeFalsy()
-          } else {
+          if (className) {
+            // if className is not falsy, then style.color is deleted
+            expect(
+              spanWithTransformer.style.getPropertyValue('color'),
+            ).toBeFalsy()
+            // className should equal to classNameWithTransformer
             expect(className).toBe(classNameWithTransformer)
           }
         }
