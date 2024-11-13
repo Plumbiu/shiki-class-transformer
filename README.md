@@ -48,7 +48,7 @@ import shikiMap from 'shiki-class-transformer/themes/vitesse-light.json'
 shikiClassTransformer({
   map: shikiMap,
   keys: ['--shiki-light'], // vitesse-dark.json is ['--shiki-dark']
-  keydeletedKeys: ['--shiki-dark'], // vitesse-dark.json is ['--shiki-light']
+  deletedKeys: ['--shiki-dark'], // vitesse-dark.json is ['--shiki-light']
 }),
 ```
 
