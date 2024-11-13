@@ -5,6 +5,7 @@ import { ShikiMap } from '../src/types'
 const entries = (obj: any) => Object.entries(obj ?? {})
 const values = (obj: any) => Object.values(obj ?? {})
 
+// Modify this line
 const PREFIX = 's'
 
 async function generateOne(themePath: string) {

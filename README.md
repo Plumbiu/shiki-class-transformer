@@ -52,6 +52,23 @@ shikiClassTransformer({
 }),
 ```
 
+# Prefix
+
+Modify [generate file](/scripts/generate.ts):
+
+```js
+// Modify this line
+const PREFIX = 's'
+```
+
+and then run:
+
+```bash
+pnpm generate
+```
+
+Theme files are [here](/src/themes/)
+
 # Future
 
 - [x] test
