@@ -1,4 +1,5 @@
 import { type ShikiTransformer } from '@shikijs/types'
+import parse from 'style-to-object'
 import { ShikiMap } from './types'
 
 interface ShikiClassTransformerParams {
@@ -6,9 +7,9 @@ interface ShikiClassTransformerParams {
 
   /**
    * the select key of color, set dev to `true` if you want to know what the key really is
-   * @default 'color'
+   * @default ['color']
    */
-  key?: string
+  keys?: string[]
 }
 
 function isString(x: unknown): x is string {
@@ -17,29 +18,41 @@ function isString(x: unknown): x is string {
 
 export function shikiClassTransformer({
   map,
-  key = 'color',
+  keys = ['color'],
 }: ShikiClassTransformerParams): ShikiTransformer {
   return {
     tokens(tokens) {
       for (const items of tokens) {
         for (const token of items) {
-          const htmlStyle = token.htmlStyle
-          if (!htmlStyle || isString(htmlStyle)) {
-            continue
+          const hasHtmlStyle = !!token.htmlStyle
+          let htmlStyle = token.htmlStyle ?? (token as any)
+          if (isString(htmlStyle)) {
+            htmlStyle = parse(htmlStyle) ?? {}
           }
-          const foreground = htmlStyle[key]?.toLowerCase()
-          if (!foreground) {
-            return
-          }
-          const className = map[foreground]
-          if (className) {
+          for (const key of keys) {
+            const foreground = htmlStyle[key]?.toLowerCase()
+            if (!foreground) {
+              continue
+            }
+            const className = map[foreground]
+            if (!className) {
+              continue
+            }
+
             if (!token.htmlAttrs) {
               token.htmlAttrs = {}
             }
+            if (!hasHtmlStyle) {
+              // @ts-ignore
+              delete token[key]
+            }
+
             let originClassName = token.htmlAttrs.class ?? ''
             originClassName += ` ${className}`
-            token.htmlStyle = {}
-            token.htmlAttrs.class = originClassName.trim()
+            const afterClassName = originClassName.trim()
+            if (afterClassName) {
+              token.htmlAttrs.class = afterClassName
+            }
           }
         }
       }

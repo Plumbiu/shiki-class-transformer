@@ -43,10 +43,10 @@ async function generateOne(themePath: string) {
 function generateCss(obj: ShikiMap) {
   let style = ''
   for (const [value, key] of entries(obj)) {
-    style += `
-.${key} {
+    style += `.${key} {
   color: ${value};
-}`.trim()
+}
+`
   }
   return style
 }
