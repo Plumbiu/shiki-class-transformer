@@ -46,8 +46,7 @@ export function shikiClassTransformer({
               // @ts-ignore
               delete token[key]
             } else {
-              // @ts-ignore
-              delete token.htmlStyle![key]
+              token.htmlStyle = {}
             }
 
             let originClassName = token.htmlAttrs.class ?? ''
