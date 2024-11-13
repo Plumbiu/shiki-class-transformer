@@ -10,6 +10,12 @@ interface ShikiClassTransformerParams {
    * @default ['color']
    */
   keys?: string[]
+
+  /**
+   * delete style props
+   * @default []
+   */
+  deletedKeys?: string[]
 }
 
 function isString(x: unknown): x is string {
@@ -19,6 +25,7 @@ function isString(x: unknown): x is string {
 export function shikiClassTransformer({
   map,
   keys = ['color'],
+  deletedKeys = [],
 }: ShikiClassTransformerParams): ShikiTransformer {
   return {
     tokens(tokens) {
@@ -43,10 +50,19 @@ export function shikiClassTransformer({
               token.htmlAttrs = {}
             }
             if (!hasHtmlStyle) {
+              for (const dk of deletedKeys) {
+                // @ts-ignore
+                delete token[dk]
+              }
               // @ts-ignore
               delete token[key]
             } else {
-              token.htmlStyle = {}
+              // @ts-ignore
+              delete token.htmlStyle![key]
+              for (const dk of deletedKeys) {
+                // @ts-ignore
+                delete token.htmlStyle![dk]
+              }
             }
 
             let originClassName = token.htmlAttrs.class ?? ''

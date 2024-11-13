@@ -5,25 +5,26 @@ import { ShikiMap } from '../src/types'
 const entries = (obj: any) => Object.entries(obj ?? {})
 const values = (obj: any) => Object.values(obj ?? {})
 
+const PREFIX = 's'
+
 async function generateOne(themePath: string) {
   const shikiMap: ShikiMap = {}
-  const prefix = 's'
   let count = 0
   const getClass = () => {
-    const className = prefix + count
+    const className = PREFIX + count
     count++
     return className
   }
 
-  function addValue(key: string) {
-    if (typeof key !== 'string') {
+  function addValue(color: string) {
+    if (typeof color !== 'string') {
       return
     }
-    key = key.toLowerCase()
-    if (shikiMap[key]) {
+    color = color.toLowerCase()
+    if (shikiMap[color]) {
       return
     }
-    shikiMap[key] = getClass()
+    shikiMap[color] = getClass()
   }
 
   const text = await fsp.readFile(themePath, 'utf-8')
